@@ -7,7 +7,7 @@ headers = {
 }
 
 
-class Sneakers:
+class Sneakers_release:
     title = ""
     img_url = ""
     price = ""
@@ -19,6 +19,15 @@ class Sneakers:
         self.price = price
         self.release_date = date
 
+
+class Description:
+    descrption = " "
+    imgs = []
+    def __init__(self, description, imgs):
+        self.descrption = description
+        self.imgs = imgs
+
+
 url = "http://sneakernews.com/air-jordan-release-dates/"
 # url = "http://sneakernews.com/release-dates/"
 html = requests.get(url, headers=headers).text
@@ -27,7 +36,8 @@ html = requests.get(url, headers=headers).text
 def pars_release(html):
     soup = BeautifulSoup(html, "html5lib")
     post_main = soup.findAll('section', {"class": "sneaker-post-main"})
-    nomer = 1
+    nomer = 0
+    cross = []
     for row in post_main:
         title = row.find('h2', {"class": "header-title"}).text
         img_url = row.find('img').get("src")
@@ -38,6 +48,7 @@ def pars_release(html):
         print("Prise is : ", price)
         print("Img : ", img_url)
         print("="*125)
+        cross[nomer] = Sneakers_release(title, img_url, price, release_date)
         nomer += 1
 
 
@@ -58,6 +69,9 @@ def pars_with_descript(html):
             html2 = requests.get(sneakers_url, headers=headers).text
             soup2 = BeautifulSoup(html2, "html5lib")
             description_class = soup2.findAll('div', {"class": "pagination-content content-page-1"})
+            imgs = []
+            nomer = 0
+            desc = []
             for r in description_class:
                 try:
                     description = r.find('blockquote').text
@@ -70,7 +84,10 @@ def pars_with_descript(html):
                     img_url = i.get("src")
                     if img_url.find("ebay") == -1:
                         print(img_url)
+                        imgs.append(img_url)
+                desc[nomer] = Description(description, imgs)
                 print('='*100)
 
+
 # pars_release(html)
-pars_with_descript(html)
+# pars_with_descript(html)
