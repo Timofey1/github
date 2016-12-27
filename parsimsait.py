@@ -89,5 +89,5 @@ def pars_with_descript(html):
                 print('='*100)
 
 
-# pars_release(html)
+pars_release(html)
 # pars_with_descript(html)
