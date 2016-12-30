@@ -3,28 +3,6 @@ import time
 
 a = SQLHelp()
 
-def createLinksTable():
-    a.query(
-        'CREATE TABLE links(id INTEGER NOT NULL PRIMARY KEY autoincrement UNIQUE, destination TEXT, isDeleted INTEGER);'
-    )
-    return
-
-
-def createVisitsTable():
-    a.query(
-        'CREATE TABLE visits(id INTEGER NOT NULL PRIMARY KEY autoincrement UNIQUE, vk_id INTEGER, link_id INTEGER, fromWhere TEXT, date INTEGER);'
-    )
-    return
-
-
-def createUsersTable():
-    a.query(
-        'CREATE TABLE users(uid INTEGER NOT NULL, first_name TEXT, last_name TEXT, sex INTEGER, bday INTEGER, city INTEGER, country INTEGER, home_town INTEGER, university_ids TEXT, schools_ids TEXT, followers INTEGER, relation INTEGER, groups_ids TEXT, date_creation INTEGER);'
-    )
-
-# ----------------------------------------------------------------
-
-
 def IdToShortUrl(Id):
 
     def reverse(s):
@@ -55,28 +33,6 @@ def ShortUrlToId(ShortUrl):
             Id = Id * 62 + ord(ShortUrl[i]) - ord('0') + 52
 
     return Id
-
-# ----------------------------------------------------------------
-
-
-def find_url_in_links_by_id(Id):
-    result = a.fetch('Select * from links where id = \'%s\';' % Id)
-    return result[0][1]
-
-
-def show_all_urls_in_links():
-    for elem in a.fetch('Select * from links;'):
-        print(elem[0], elem[1], end='\n', sep=': ')
-    return
-
-# ----------------------------------------------------------------
-
-
-def add_url_to_links(url):
-    a.query(
-        'INSERT INTO links(destination) values (\'%s\')' % url
-    )
-
 
 def addUser(d):
     if len(a.fetch('Select * from users where uid = %d' % d['uid'])) == 0:
