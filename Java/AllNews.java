@@ -121,7 +121,11 @@ public class AllNews {
         ArrayList<String> subs = getSubs(login);
         ArrayList<Post> postObjs = new ArrayList<Post>();
         for (String sub: subs) {
-            postObjs.add(pars);
+            try {
+                postObjs.add((Post) vk.parse(sub));
+            } catch (Exception e) {
+                postObjs.add((Post) instagram.parse(sub));
+            }
         }
         sortDate(postObjs);
         Post[] result = new Post[10];
@@ -140,7 +144,11 @@ public class AllNews {
         ArrayList<String> subs = getSubs(login);
         ArrayList<Post> postObjs = new ArrayList<Post>();
         for (String sub: subs) {
-            postObjs.add(pars);
+            try {
+                postObjs.add((Post) vk.parse(sub));
+            } catch (Exception e) {
+                postObjs.add((Post) instagram.parse(sub));
+            }
         }
         sortRate(postObjs);
         Post[] result = new Post[10];
@@ -154,7 +162,7 @@ public class AllNews {
      * add Subscription
      * @param login username
      * @param socialNetwork type of SN like vk or instagram
-     * @param snurl url of sourse
+     * @param snurl idvk or unstagram's username
      * @return response String
      * @throws IOException
      */
@@ -196,28 +204,4 @@ public class AllNews {
         return response;
     }
 
-}
-
-class Post {
-    protected String sourse;
-    protected String pid;
-    protected Date date;
-    protected String link;
-    protected String description;
-    protected String imageUrl;
-    protected Integer likes;
-    protected Integer reposts;
-
-    Post(String sourse, String pid, Date date,String description, String link, String imageUrl, Integer likes, Integer reposts) {
-
-        this.date = date;
-        this.description = description;
-        this.imageUrl = imageUrl;
-        this.link = link;
-        this.pid = pid;
-        this.likes = likes;
-        this.reposts = reposts;
-        this.sourse = sourse;
-
-    }
 }
