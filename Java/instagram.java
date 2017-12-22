@@ -1,13 +1,12 @@
 //Импортируем все, что нам потребуется
 import com.google.gson.*;
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 import java.io.IOException;
 import java.util.*;
 
 public class instagram implements Parser {
 
-    public static List<Post> parse(String instusername) throws IOException {
+    public static ArrayList<Post> parse(String instusername) throws IOException {
 
         // Список в котором мы будем хранить все данные
         List<Post> articleList = new ArrayList<>();
@@ -81,7 +80,7 @@ public class instagram implements Parser {
 
         // Печатаем по одному элементы списка(то есть объекты класса)
         // articleList.forEach(System.out::println);
-        return articleList;
+        return (ArrayList<Post>) articleList;
 
     }
 }

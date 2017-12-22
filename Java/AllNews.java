@@ -121,10 +121,9 @@ public class AllNews {
         ArrayList<String> subs = getSubs(login);
         ArrayList<Post> postObjs = new ArrayList<Post>();
         for (String sub: subs) {
-            try {
-                postObjs.add((Post) vk.parse(sub));
-            } catch (Exception e) {
-                postObjs.add((Post) instagram.parse(sub));
+            ArrayList<Post> arr = checkParser(sub);
+            for(Post i: arr){
+                postObjs.add(i);
             }
         }
         sortDate(postObjs);
@@ -144,10 +143,9 @@ public class AllNews {
         ArrayList<String> subs = getSubs(login);
         ArrayList<Post> postObjs = new ArrayList<Post>();
         for (String sub: subs) {
-            try {
-                postObjs.add((Post) vk.parse(sub));
-            } catch (Exception e) {
-                postObjs.add((Post) instagram.parse(sub));
+            ArrayList<Post> arr = checkParser(sub);
+            for(Post i: arr){
+                postObjs.add(i);
             }
         }
         sortRate(postObjs);
@@ -202,6 +200,19 @@ public class AllNews {
         String doc = Jsoup.connect(url).get().text();
         String response = doc.toString();
         return response;
+    }
+
+    public static ArrayList<Post> checkParser(String sub) throws IOException {
+        if (sub.contains("inst")) {
+            String url = (String) sub.subSequence(sub.lastIndexOf("/")+1,-1);
+            ArrayList<Post> arr = instagram.parse(url);
+            return arr;
+        } else {
+            String url = (String) sub.subSequence(sub.lastIndexOf("/")+1,-1);
+            vk.parse(url);
+            ArrayList<Post> arr = instagram.parse(url);
+            return arr;
+        }
     }
 
 }

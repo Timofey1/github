@@ -6,7 +6,7 @@ import java.util.*;
 
 public class vk implements Parser{
 
-    public static List<Post> parse(String vkgroupid) throws IOException {
+    public static ArrayList<Post> parse(String vkgroupid) throws IOException {
         // Список в котором мы будем хранить все данные
         List<Post> articleList = new ArrayList<>();
 
@@ -55,6 +55,6 @@ public class vk implements Parser{
             articleList.add(new Post(sourse, pid, date, description, link, imageUrl, likes, reposts));
         }
         // articleList.forEach(System.out::println);
-        return articleList;
+        return (ArrayList<Post>) articleList;
     }
 }
