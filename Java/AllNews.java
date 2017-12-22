@@ -16,7 +16,7 @@ public class AllNews {
      * @return String
      * @throws IOException
      */
-        public static String getresp(String login) throws IOException { //arg=String login
+        public static String getresp(String login) throws IOException {
         String url = "http://news.jkdev.ru/" + login + "/uinfo";
         String doc = Jsoup.connect(url).get().text();
         String response = doc.toString();
@@ -61,10 +61,21 @@ public class AllNews {
     public static ArrayList<String> getSubs(String login) throws IOException, JSONException {
         ArrayList<String> subs = new ArrayList<>();
         ArrayList<String> vksubs = vkSubs(login);
-        for (String sub: vksubs) {
+        try{
+            for (String sub: vksubs) {
             subs.add(sub);
+            }
+        } catch (Exception e) {
+            System.out.println(e.toString());
         }
-        ArrayList<String> intagramsubs = vkSubs(login);
+        ArrayList<String> intagramsubs = instagramSubs(login);
+        try{
+            for (String sub: intagramsubs) {
+                subs.add(sub);
+            }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
         for (String sub: intagramsubs) {
             subs.add(sub);
         }
@@ -202,6 +213,12 @@ public class AllNews {
         return response;
     }
 
+    /**
+     *  whitch parser we are using
+     * @param sub String subscription
+     * @return ArrayList<Post>
+     * @throws IOException
+     */
     public static ArrayList<Post> checkParser(String sub) throws IOException {
         if (sub.contains("inst")) {
             String url = (String) sub.subSequence(sub.lastIndexOf("/")+1,-1);
@@ -210,7 +227,7 @@ public class AllNews {
         } else {
             String url = (String) sub.subSequence(sub.lastIndexOf("/")+1,-1);
             vk.parse(url);
-            ArrayList<Post> arr = instagram.parse(url);
+            ArrayList<Post> arr = vk.parse(url);
             return arr;
         }
     }
