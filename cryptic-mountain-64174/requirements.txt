@@ -1,0 +1,6 @@
+bottle
+numpy
+keras
+tensorflow
+pillow
+
