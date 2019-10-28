@@ -1,2 +1,0 @@
-<node id="90215121" visible="true" version="28" changeset="56701886" timestamp="2018-02-26T20:27:13Z" user="literan" uid="830106" lat="55.7314390" lon="37.7343797"/>
- 
